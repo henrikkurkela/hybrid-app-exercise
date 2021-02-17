@@ -1,5 +1,5 @@
 import React from 'react'
-import { NativeRouter, Route, Switch, Link } from 'react-router-native'
+import { NativeRouter, Route, Switch } from 'react-router-native'
 import { Provider } from 'react-redux'
 
 import Dashboard from './components/dashboard'
