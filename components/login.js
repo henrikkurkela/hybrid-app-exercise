@@ -26,8 +26,8 @@ const LoginForm = () => {
     }
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.text}>{text}</Text>
+        <View style={styles.background}>
+            <Text style={styles.headline}>{text}</Text>
             <TextInput
                 style={styles.field}
                 placeholder='username'

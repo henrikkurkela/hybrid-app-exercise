@@ -14,7 +14,7 @@ const Dashboard = () => {
     const status = history.location.state
 
     return (
-        <View>
+        <View style={styles.background}>
             <Text style={styles.text}>{status}</Text>
             <Link to='/signup'>
                 <Text style={styles.button}>Sign Up</Text>

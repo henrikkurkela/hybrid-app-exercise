@@ -1,16 +1,23 @@
 import { StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
+    background: {
+        backgroundColor: 'black',
+        flex: 1
+    },
     container: {
-        backgroundColor: 'teal',
         justifyContent: 'center',
-        alignItems: 'center',
-        flexGrow: 1,
-        flexShrink: 1,
+    },
+    headline: {
+        fontSize: 24,
+        textAlign: 'center',
+        color: 'white',
+        paddng: 20
     },
     text: {
         fontSize: 20,
-        textAlign: 'center'
+        textAlign: 'center',
+        color: 'white'
     },
     field: {
         fontSize: 20,
@@ -27,7 +34,24 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         backgroundColor: 'blue',
         textAlign: 'center',
+        color: 'white',
         justifyContent: 'center'
+    },
+    listItem: {
+        width: '100%',
+        padding: 20,
+        borderTopWidth: 1,
+        borderColor: 'white',
+        flexDirection: 'row'
+    },
+    listPictureContainer: {
+        flex: 1,
+        flexGrow: 1,
+    },
+    listTextContainer: {
+        flex: 1,
+        flexGrow: 2,
+        flexWrap: 'wrap'
     }
 })
 
