@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import Dashboard from './components/dashboard'
 import SignupForm from './components/signup'
 import LoginForm from './components/login'
+import Posting from './components/posting'
 
 import store from './reducers'
 
@@ -21,6 +22,9 @@ export default function App() {
 					</Route>
 					<Route path='/login' exact>
 						<LoginForm />
+					</Route>
+					<Route path='/posting/:id'>
+						<Posting />
 					</Route>
 				</Switch>
 			</NativeRouter>

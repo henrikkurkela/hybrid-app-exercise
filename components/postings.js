@@ -1,24 +1,29 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { View, FlatList, Text, Image } from 'react-native'
+import { Link } from 'react-router-native'
+import { useSelector } from 'react-redux'
 import axios from 'axios'
 
 import styles from '../styles'
+import { addPosting } from '../actions'
 
 const Item = ({ item }) => (
-    <View style={styles.listItem}>
-        <View style={styles.listPictureContainer}>
-            <Image source={require('../assets/test.jpg')} style={{ width: 100, height: 100 }} />
+    <Link to={`/posting/${item.id}`}>
+        <View style={styles.listItem}>
+            <View style={styles.listPictureContainer}>
+                <Image source={require('../assets/test.jpg')} style={{ width: 100, height: 100 }} />
+            </View>
+            <View style={styles.listTextContainer}>
+                <Text style={styles.headline}>{item.title + ' ' + item.price + ' €'}</Text>
+                <Text style={styles.text}>{item.description}</Text>
+            </View>
         </View>
-        <View style={styles.listTextContainer}>
-            <Text style={styles.headline}>{item.title + ' ' + item.price + ' €'}</Text>
-            <Text style={styles.text}>{item.description}</Text>
-        </View>
-    </View>
+    </Link>
 )
 
 const Postings = () => {
 
-    const [postings, setPostings] = useState([])
+    const postings = useSelector(state => state.postings)
 
     useEffect(() => {
 
@@ -27,12 +32,12 @@ const Postings = () => {
         axios.get('https://kebappi.herokuapp.com/api/postings')
             .then((response) => {
                 if (mounted) {
-                    setPostings(response.data)
+                    response.data.map((posting) => {
+                        addPosting(posting)
+                    })
                 }
-            }).catch(() => {
-                if (mounted) {
-                    setPostings([{ id: 0, title: 'Network error.' }])
-                }
+            }).catch((error) => {
+                console.log(error)
             })
 
         return () => mounted = false

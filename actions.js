@@ -10,4 +10,11 @@ const authenticate = (user) => {
     axios.defaults.headers['Authorization'] = `Bearer ${user.auth}`
 }
 
-export { authenticate }
+const addPosting = (posting) => {
+    store.dispatch({
+        type: 'ADD_POSTING',
+        data: posting
+    })
+}
+
+export { authenticate, addPosting }

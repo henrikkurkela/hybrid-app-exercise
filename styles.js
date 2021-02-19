@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     headline: {
-        fontSize: 24,
+        fontSize: 30,
         textAlign: 'center',
         color: 'white',
         margin: 20
@@ -58,6 +58,13 @@ const styles = StyleSheet.create({
         flex: 1,
         flexGrow: 2,
         flexWrap: 'wrap'
+    },
+    image: {
+        resizeMode: 'contain',
+        aspectRatio: 1,
+        flex: 1,
+        marginTop: 10,
+        marginBottom: 10
     }
 })
 
