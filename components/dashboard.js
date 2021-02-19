@@ -1,27 +1,34 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text } from 'react-native'
-import { Link, useHistory } from 'react-router-native'
+import { Link } from 'react-router-native'
+import { useSelector } from 'react-redux'
 
 import Postings from './postings'
 
 import styles from '../styles'
 
-
 const Dashboard = () => {
 
-    const history = useHistory()
+    const auth = useSelector(state => state.auth)
+    const [status, setStatus] = useState('Welcome! Log in to start selling!')
 
-    const status = history.location.state
+    useEffect(() => {
+
+        if (auth !== null) {
+            setStatus(`Welcome back, ${auth.username}`)
+        }
+    }, [])
 
     return (
         <View style={styles.background}>
-            <Text style={styles.text}>{status}</Text>
-            <Link to='/signup'>
-                <Text style={styles.button}>Sign Up</Text>
-            </Link>
-            <Link to='/login'>
-                <Text style={styles.button}>Log In</Text>
-            </Link>
+            <Text style={styles.headline}>{status}</Text>
+            {
+                auth ?
+                    null :
+                    <Link to='/login'>
+                        <Text style={styles.button}>Log In</Text>
+                    </Link>
+            }
             <Postings />
         </View>
     )

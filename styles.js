@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native'
 const styles = StyleSheet.create({
     background: {
         backgroundColor: 'black',
+        padding: 20,
         flex: 1
     },
     container: {
@@ -12,12 +13,17 @@ const styles = StyleSheet.create({
         fontSize: 24,
         textAlign: 'center',
         color: 'white',
-        paddng: 20
+        margin: 20
     },
     text: {
         fontSize: 20,
         textAlign: 'center',
         color: 'white'
+    },
+    link: {
+        fontSize: 20,
+        textAlign: 'center',
+        color: 'orange'
     },
     field: {
         fontSize: 20,

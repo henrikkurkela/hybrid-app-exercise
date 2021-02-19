@@ -21,12 +21,21 @@ const Postings = () => {
     const [postings, setPostings] = useState([])
 
     useEffect(() => {
+
+        let mounted = true
+
         axios.get('https://kebappi.herokuapp.com/api/postings')
             .then((response) => {
-                setPostings(response.data)
-            }).catch((error) => {
-                setPostings([{ id: 0, title: 'Network error.' }])
+                if (mounted) {
+                    setPostings(response.data)
+                }
+            }).catch(() => {
+                if (mounted) {
+                    setPostings([{ id: 0, title: 'Network error.' }])
+                }
             })
+
+        return () => mounted = false
     }, [])
 
     const renderPosting = ({ item }) => (

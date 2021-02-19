@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Text, View, TextInput, Pressable } from 'react-native'
-import { useHistory } from 'react-router-native'
+import { useHistory, Link } from 'react-router-native'
 import axios from 'axios'
 
 import styles from '../styles'
@@ -49,11 +49,17 @@ const SignupForm = () => {
                     Sign Up
                 </Text>
             </Pressable>
-            <Pressable onPress={() => history.goBack()}>
+            <Pressable onPress={() => history.push('/')}>
                 <Text style={styles.button}>
                     Go Back
                 </Text>
             </Pressable>
+            <Text style={styles.text}>
+                Already a member?
+            </Text>
+            <Link to='/login'>
+                <Text style={styles.link}>Log In</Text>
+            </Link>
         </View>
     )
 }

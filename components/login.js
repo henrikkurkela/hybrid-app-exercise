@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Text, View, TextInput, Pressable } from 'react-native'
-import { useHistory } from 'react-router-native'
+import { useHistory, Link } from 'react-router-native'
 import axios from 'axios'
 
 import styles from '../styles'
@@ -18,8 +18,8 @@ const LoginForm = () => {
 
         axios.post('https://kebappi.herokuapp.com/api/login', { username, password })
             .then((response) => {
-                authenticate(response.data)
-                history.push('/', [`Welcome ${username}`])
+                authenticate({ auth: response.data, username: username })
+                history.push('/')
             }).catch((error) => {
                 setText(error.response?.data || 'Network error.')
             })
@@ -44,11 +44,17 @@ const LoginForm = () => {
                     Log In
                 </Text>
             </Pressable>
-            <Pressable onPress={() => history.goBack()}>
+            <Pressable onPress={() => history.push('/')}>
                 <Text style={styles.button}>
                     Go Back
                 </Text>
             </Pressable>
+            <Text style={styles.text}>
+                No account yet?
+            </Text>
+            <Link to='/signup'>
+                <Text style={styles.link}>Sign Up</Text>
+            </Link>
         </View>
     )
 }
