@@ -6,6 +6,7 @@ import Dashboard from './components/dashboard'
 import SignupForm from './components/signup'
 import LoginForm from './components/login'
 import Posting from './components/posting'
+import Create from './components/create'
 
 import store from './reducers'
 
@@ -22,6 +23,9 @@ export default function App() {
 					</Route>
 					<Route path='/login' exact>
 						<LoginForm />
+					</Route>
+					<Route path='/create'>
+						<Create />
 					</Route>
 					<Route path='/posting/:id'>
 						<Posting />

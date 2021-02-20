@@ -24,7 +24,9 @@ const Dashboard = () => {
             <Text style={styles.headline}>{status}</Text>
             {
                 auth ?
-                    null :
+                    <Link to='/create'>
+                        <Text style={styles.button}>New Posting</Text>
+                    </Link> :
                     <Link to='/login'>
                         <Text style={styles.button}>Log In</Text>
                     </Link>
