@@ -18,7 +18,7 @@ const LoginForm = () => {
 
         axios.post('https://kebappi.herokuapp.com/api/login', { username, password })
             .then((response) => {
-                authenticate({ auth: response.data, username: username })
+                authenticate({ auth: response.data.auth, username: username })
                 history.push('/')
             }).catch((error) => {
                 setText(error.response?.data || 'Network error.')

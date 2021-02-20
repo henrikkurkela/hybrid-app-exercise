@@ -1,17 +1,49 @@
 import React, { useState } from 'react'
 import { View, Text, TextInput, Pressable } from 'react-native'
 import { useHistory } from 'react-router-native'
+import axios from 'axios'
 
 import styles from '../styles'
 
 const Create = () => {
 
     const [newPosting, setNewPosting] = useState({
+        title: '',
+        description: '',
+        price: 0,
+        location: '',
+        category: '',
         shipping: false,
         pickup: false
     })
 
     const history = useHistory()
+
+    const upload = () => {
+
+        let formData = new FormData()
+
+        formData.append('title', newPosting.title)
+        formData.append('description', newPosting.description)
+        formData.append('price', newPosting.price)
+        formData.append('location', newPosting.location)
+        formData.append('category', newPosting.category)
+        formData.append('shipping', newPosting.shipping)
+        formData.append('pickup', newPosting.pickup)
+
+        axios({
+            method: 'post',
+            url: 'https://kebappi.herokuapp.com/api/postings',
+            data: formData,
+            headers: { 'Content-Type': 'multipart/form-data' }
+        })
+            .then(() => {
+                history.push('/')
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
 
     return (
         <View style={styles.background}>
@@ -52,7 +84,7 @@ const Create = () => {
                     {newPosting.pickup ? 'Buyer can pickup' : 'No pickups'}
                 </Text>
             </Pressable>
-            <Pressable onPress={() => console.log(newPosting)}>
+            <Pressable onPress={upload}>
                 <Text style={styles.button}>
                     Post
                 </Text>
