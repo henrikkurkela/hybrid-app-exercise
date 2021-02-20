@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Pressable } from 'react-native'
 import { Link } from 'react-router-native'
 import { useSelector } from 'react-redux'
 
@@ -11,6 +11,7 @@ const Dashboard = () => {
 
     const auth = useSelector(state => state.auth)
     const [status, setStatus] = useState('Welcome! Log in to start selling!')
+    const [allPostings, setAllPostings] = useState(true)
 
     useEffect(() => {
 
@@ -24,14 +25,23 @@ const Dashboard = () => {
             <Text style={styles.headline}>{status}</Text>
             {
                 auth ?
-                    <Link to='/create'>
-                        <Text style={styles.button}>New Posting</Text>
-                    </Link> :
+                    <>
+                        <Link to='/create'>
+                            <Text style={styles.button}>New Posting</Text>
+                        </Link>
+                        <Pressable onPress={() => setAllPostings(!allPostings)}>
+                            <Text style={styles.button}>{
+                                allPostings ?
+                                    'Show My Postings' :
+                                    'Show All Postings'
+                            }</Text>
+                        </Pressable>
+                    </> :
                     <Link to='/login'>
                         <Text style={styles.button}>Log In</Text>
                     </Link>
             }
-            <Postings />
+            <Postings user={allPostings ? null : auth.username} />
         </View>
     )
 }

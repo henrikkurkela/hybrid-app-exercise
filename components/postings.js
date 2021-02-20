@@ -21,26 +21,26 @@ const Item = ({ item }) => (
     </Link>
 )
 
-const Postings = () => {
+const Postings = ({ user = null }) => {
 
     const postings = useSelector(state => state.postings)
 
     useEffect(() => {
 
-        let mounted = true
+        const source = axios.CancelToken.source()
 
-        axios.get('https://kebappi.herokuapp.com/api/postings')
+        axios.get('https://kebappi.herokuapp.com/api/postings', {
+            cancelToken: source.token
+        })
             .then((response) => {
-                if (mounted) {
-                    response.data.map((posting) => {
-                        addPosting(posting)
-                    })
-                }
+                response.data.map((posting) => {
+                    addPosting(posting)
+                })
             }).catch((error) => {
                 console.log(error)
             })
 
-        return () => mounted = false
+        return () => source.cancel()
     }, [])
 
     const renderPosting = ({ item }) => (
@@ -48,13 +48,16 @@ const Postings = () => {
     )
 
     return (
-        <View style={styles.container}>
-            <FlatList
-                data={postings}
-                renderItem={renderPosting}
-                keyExtractor={item => item.id.toString()}
-            />
-        </View>
+        <FlatList
+            data=
+            {
+                user ?
+                    postings.filter((item) => item.user.username === user) :
+                    postings
+            }
+            renderItem={renderPosting}
+            keyExtractor={item => item.id.toString()}
+        />
     )
 }
 

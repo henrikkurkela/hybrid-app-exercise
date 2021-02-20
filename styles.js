@@ -6,9 +6,6 @@ const styles = StyleSheet.create({
         padding: 20,
         flex: 1
     },
-    container: {
-        justifyContent: 'center',
-    },
     headline: {
         fontSize: 30,
         textAlign: 'center',
