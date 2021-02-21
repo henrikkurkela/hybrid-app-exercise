@@ -17,4 +17,11 @@ const addPosting = (posting) => {
     })
 }
 
-export { authenticate, addPosting }
+const removePosting = (posting) => {
+    store.dispatch({
+        type: 'REMOVE_POSTING',
+        data: posting
+    })
+}
+
+export { authenticate, addPosting, removePosting }

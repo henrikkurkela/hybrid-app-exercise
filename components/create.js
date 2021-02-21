@@ -28,8 +28,8 @@ const Create = () => {
         formData.append('price', newPosting.price)
         formData.append('location', newPosting.location)
         formData.append('category', newPosting.category)
-        formData.append('shipping', newPosting.shipping)
-        formData.append('pickup', newPosting.pickup)
+        if (newPosting.shipping) formData.append('shipping', 'true')
+        if (newPosting.pickup) formData.append('pickup', 'true')
 
         axios({
             method: 'post',
