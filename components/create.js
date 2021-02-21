@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, TextInput, Pressable } from 'react-native'
 import { useHistory } from 'react-router-native'
 import axios from 'axios'
 
 import styles from '../styles'
+import { updatePosting } from '../actions'
 
 const Create = () => {
 
+    const [editMode, setEditMode] = useState(false)
     const [newPosting, setNewPosting] = useState({
         title: '',
         description: '',
@@ -19,6 +21,14 @@ const Create = () => {
 
     const history = useHistory()
 
+    useEffect(() => {
+
+        if (history.location.state !== undefined) {
+            setNewPosting(history.location.state)
+            setEditMode(true)
+        }
+    }, [history])
+
     const upload = () => {
 
         let formData = new FormData()
@@ -28,21 +38,45 @@ const Create = () => {
         formData.append('price', newPosting.price)
         formData.append('location', newPosting.location)
         formData.append('category', newPosting.category)
-        if (newPosting.shipping) formData.append('shipping', 'true')
-        if (newPosting.pickup) formData.append('pickup', 'true')
+        if (newPosting.shipping) {
+            formData.append('shipping', 'true')
+        } else {
+            formData.append('shipping', 'false')
+        }
+        if (newPosting.pickup) {
+            formData.append('pickup', 'true')
+        } else {
+            formData.append('pickup', 'false')
+        }
 
-        axios({
-            method: 'post',
-            url: 'https://kebappi.herokuapp.com/api/postings',
-            data: formData,
-            headers: { 'Content-Type': 'multipart/form-data' }
-        })
-            .then(() => {
-                history.push('/')
+        if (editMode) {
+            axios({
+                method: 'patch',
+                url: `https://kebappi.herokuapp.com/api/postings/${newPosting.id}`,
+                data: formData,
+                headers: { 'Content-Type': 'multipart/form-data' }
             })
-            .catch((error) => {
-                console.log(error)
+                .then((response) => {
+                    updatePosting(response.data)
+                    history.push('/')
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        } else {
+            axios({
+                method: 'post',
+                url: 'https://kebappi.herokuapp.com/api/postings',
+                data: formData,
+                headers: { 'Content-Type': 'multipart/form-data' }
             })
+                .then(() => {
+                    history.push('/')
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        }
     }
 
     return (
@@ -51,27 +85,32 @@ const Create = () => {
             <TextInput
                 style={styles.field}
                 placeholder='title'
+                value={newPosting.title}
                 onChange={(event) => setNewPosting({ ...newPosting, title: event.target.value })}
             />
             <TextInput
                 style={styles.field}
                 placeholder='description'
+                value={newPosting.description}
                 onChange={(event) => setNewPosting({ ...newPosting, description: event.target.value })}
             />
             <TextInput
                 style={styles.field}
                 placeholder='price'
                 keyboardType='numeric'
+                value={newPosting.price}
                 onChange={(event) => setNewPosting({ ...newPosting, price: Number(event.target.value) })}
             />
             <TextInput
                 style={styles.field}
                 placeholder='location'
+                value={newPosting.location}
                 onChange={(event) => setNewPosting({ ...newPosting, location: event.target.value })}
             />
             <TextInput
                 style={styles.field}
                 placeholder='category'
+                value={newPosting.category}
                 onChange={(event) => setNewPosting({ ...newPosting, category: event.target.value })}
             />
             <Pressable onPress={() => setNewPosting({ ...newPosting, shipping: !newPosting.shipping })}>

@@ -9,6 +9,15 @@ const reducer = (state = [], action) => {
             }
         case 'REMOVE_POSTING':
             return state.filter((item) => item.id !== action.data.id)
+        case 'UPDATE_POSTING':
+            const id = action.data.id
+            const updatedPosting = state.find(item => item.id === id)
+            const changedPosting = {
+                ...updatedPosting, ...action.data
+            }
+            return state.map(item =>
+                item.id !== id ? item : changedPosting
+            )
         case 'RESET':
             return state = []
         default:

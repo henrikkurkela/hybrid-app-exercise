@@ -46,9 +46,9 @@ const Posting = () => {
                 {
                     ownPosting ?
                         <>
-                            <Link to='/'>
+                            <Pressable onPress={() => history.push('/create', posting)}>
                                 <Text style={styles.button}>Edit Posting</Text>
-                            </Link>
+                            </Pressable>
                             <Pressable onPress={() => deletePosting(posting)}>
                                 <Text style={styles.button}>Delete Posting</Text>
                             </Pressable>
