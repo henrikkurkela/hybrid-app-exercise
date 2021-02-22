@@ -26,6 +26,9 @@ const Dashboard = () => {
             return (
                 <>
                     <Text style={styles.headline}>{status}</Text>
+                    <Link to='/search'>
+                        <Text style={styles.button}>Search</Text>
+                    </Link>
                     <Link to='/create'>
                         <Text style={styles.button}>New Posting</Text>
                     </Link>
@@ -44,6 +47,9 @@ const Dashboard = () => {
                     <Text style={styles.headline}>{status}</Text>
                     <Link to='/login'>
                         <Text style={styles.button}>Log In</Text>
+                    </Link>
+                    <Link to='/search'>
+                        <Text style={styles.button}>Search</Text>
                     </Link>
                 </>
             )

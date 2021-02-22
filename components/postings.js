@@ -21,9 +21,11 @@ const Item = ({ item }) => (
     </Link>
 )
 
-const Postings = ({ user = null, header = () => { return <></> } }) => {
+const Postings = ({ user = null, filter = { field: null, value: null }, header = () => { return <></> } }) => {
 
     const postings = useSelector(state => state.postings)
+
+    let listData = []
 
     useEffect(() => {
 
@@ -43,6 +45,16 @@ const Postings = ({ user = null, header = () => { return <></> } }) => {
         return () => source.cancel()
     }, [])
 
+    if (user) {
+        listData = postings.filter((item) => item.user.username === user)
+    } else {
+        listData = postings
+    }
+
+    if (filter.field && filter.value) {
+        listData = listData.filter((item) => RegExp(filter.value, 'gi').test(item[filter.field]))
+    }
+
     const renderPosting = ({ item }) => (
         <Item item={item} />
     )
@@ -50,12 +62,7 @@ const Postings = ({ user = null, header = () => { return <></> } }) => {
     return (
         <FlatList
             ListHeaderComponent={header}
-            data=
-            {
-                user ?
-                    postings.filter((item) => item.user.username === user) :
-                    postings
-            }
+            data={listData}
             renderItem={renderPosting}
             keyExtractor={item => item.id.toString()}
         />

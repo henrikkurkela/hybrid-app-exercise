@@ -7,6 +7,7 @@ import SignupForm from './components/signup'
 import LoginForm from './components/login'
 import Posting from './components/posting'
 import Create from './components/create'
+import Search from './components/search'
 
 import store from './reducers'
 
@@ -26,6 +27,9 @@ export default function App() {
 					</Route>
 					<Route path='/create'>
 						<Create />
+					</Route>
+					<Route path='/search'>
+						<Search />
 					</Route>
 					<Route path='/posting/:id'>
 						<Posting />

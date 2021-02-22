@@ -17,8 +17,7 @@ const SignupForm = () => {
     const signup = () => {
 
         axios.post('https://kebappi.herokuapp.com/api/signup', { email, username, password })
-            .then((response) => {
-                console.log(response)
+            .then(() => {
                 history.push('/', [`Account ${username} created.`])
             }).catch((error) => {
                 setText(error.response?.data || 'Network error.')
