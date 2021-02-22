@@ -31,18 +31,21 @@ const SignupForm = () => {
             <TextInput
                 style={styles.field}
                 placeholder='email'
-                onChange={(event) => setEmail(event.target.value)}
+                value={email}
+                onChangeText={(text) => setEmail(text)}
             />
             <TextInput
                 style={styles.field}
                 placeholder='username'
-                onChange={(event) => setUsername(event.target.value)}
+                value={username}
+                onChangeText={(text) => setUsername(text)}
             />
             <TextInput
                 style={styles.field}
                 placeholder='password'
                 secureTextEntry={true}
-                onChange={(event) => setPassword(event.target.value)}
+                value={password}
+                onChangeText={(event) => setPassword(text)}
             />
             <Pressable onPress={signup}>
                 <Text style={styles.button}>

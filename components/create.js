@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, TextInput, Pressable } from 'react-native'
+import { ScrollView, Text, TextInput, Pressable } from 'react-native'
 import { useHistory } from 'react-router-native'
 import axios from 'axios'
 
@@ -80,38 +80,38 @@ const Create = () => {
     }
 
     return (
-        <View style={styles.background}>
+        <ScrollView style={styles.background}>
             <Text style={styles.headline}>New Posting</Text>
             <TextInput
                 style={styles.field}
                 placeholder='title'
                 value={newPosting.title}
-                onChange={(event) => setNewPosting({ ...newPosting, title: event.target.value })}
+                onChangeText={(text) => setNewPosting({ ...newPosting, title: text })}
             />
             <TextInput
                 style={styles.field}
                 placeholder='description'
                 value={newPosting.description}
-                onChange={(event) => setNewPosting({ ...newPosting, description: event.target.value })}
+                onChangeText={(text) => setNewPosting({ ...newPosting, description: text })}
             />
             <TextInput
                 style={styles.field}
                 placeholder='price'
                 keyboardType='numeric'
-                value={newPosting.price}
-                onChange={(event) => setNewPosting({ ...newPosting, price: Number(event.target.value) })}
+                value={String(newPosting.price)}
+                onChangeText={(text) => setNewPosting({ ...newPosting, price: Number(text) })}
             />
             <TextInput
                 style={styles.field}
                 placeholder='location'
                 value={newPosting.location}
-                onChange={(event) => setNewPosting({ ...newPosting, location: event.target.value })}
+                onChangeText={(text) => setNewPosting({ ...newPosting, location: text })}
             />
             <TextInput
                 style={styles.field}
                 placeholder='category'
                 value={newPosting.category}
-                onChange={(event) => setNewPosting({ ...newPosting, category: event.target.value })}
+                onChangeText={(text) => setNewPosting({ ...newPosting, category: text })}
             />
             <Pressable onPress={() => setNewPosting({ ...newPosting, shipping: !newPosting.shipping })}>
                 <Text style={newPosting.shipping ? styles.buttonGreen : styles.buttonRed}>
@@ -133,7 +133,7 @@ const Create = () => {
                     Go Back
                 </Text>
             </Pressable>
-        </View>
+        </ScrollView>
     )
 }
 

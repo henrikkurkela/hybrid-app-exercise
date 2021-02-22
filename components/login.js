@@ -31,13 +31,15 @@ const LoginForm = () => {
             <TextInput
                 style={styles.field}
                 placeholder='username'
-                onChange={(event) => setUsername(event.target.value)}
+                value={username}
+                onChangeText={(text) => setUsername(text)}
             />
             <TextInput
                 style={styles.field}
                 placeholder='password'
                 secureTextEntry={true}
-                onChange={(event) => setPassword(event.target.value)}
+                value={password}
+                onChangeText={(text) => setPassword(text)}
             />
             <Pressable onPress={login}>
                 <Text style={styles.button}>
