@@ -40,6 +40,26 @@ const styles = StyleSheet.create({
         color: 'white',
         justifyContent: 'center'
     },
+    buttonRed: {
+        fontSize: 20,
+        margin: 20,
+        padding: 20,
+        borderRadius: 5,
+        backgroundColor: 'red',
+        textAlign: 'center',
+        color: 'white',
+        justifyContent: 'center'
+    },
+    buttonGreen: {
+        fontSize: 20,
+        margin: 20,
+        padding: 20,
+        borderRadius: 5,
+        backgroundColor: 'green',
+        textAlign: 'center',
+        color: 'white',
+        justifyContent: 'center'
+    },
     listItem: {
         width: '100%',
         padding: 20,

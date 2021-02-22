@@ -114,12 +114,12 @@ const Create = () => {
                 onChange={(event) => setNewPosting({ ...newPosting, category: event.target.value })}
             />
             <Pressable onPress={() => setNewPosting({ ...newPosting, shipping: !newPosting.shipping })}>
-                <Text style={styles.button}>
+                <Text style={newPosting.shipping ? styles.buttonGreen : styles.buttonRed}>
                     {newPosting.shipping ? 'I can ship' : 'No shipping'}
                 </Text>
             </Pressable>
             <Pressable onPress={() => setNewPosting({ ...newPosting, pickup: !newPosting.pickup })}>
-                <Text style={styles.button}>
+                <Text style={newPosting.pickup ? styles.buttonGreen : styles.buttonRed}>
                     {newPosting.pickup ? 'Buyer can pickup' : 'No pickups'}
                 </Text>
             </Pressable>
