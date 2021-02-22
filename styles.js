@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     listTextContainer: {
         flex: 1,
         flexGrow: 2,
-        flexWrap: 'wrap'
+        flexShrink: 1
     },
     image: {
         resizeMode: 'contain',

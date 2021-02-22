@@ -21,7 +21,7 @@ const Item = ({ item }) => (
     </Link>
 )
 
-const Postings = ({ user = null }) => {
+const Postings = ({ user = null, header = () => { return <></> } }) => {
 
     const postings = useSelector(state => state.postings)
 
@@ -49,6 +49,7 @@ const Postings = ({ user = null }) => {
 
     return (
         <FlatList
+            ListHeaderComponent={header}
             data=
             {
                 user ?

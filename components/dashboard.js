@@ -20,28 +20,39 @@ const Dashboard = () => {
         }
     }, [])
 
-    return (
-        <View style={styles.background}>
-            <Text style={styles.headline}>{status}</Text>
-            {
-                auth ?
-                    <>
-                        <Link to='/create'>
-                            <Text style={styles.button}>New Posting</Text>
-                        </Link>
-                        <Pressable onPress={() => setAllPostings(!allPostings)}>
-                            <Text style={styles.button}>{
-                                allPostings ?
-                                    'Show My Postings' :
-                                    'Show All Postings'
-                            }</Text>
-                        </Pressable>
-                    </> :
+    const header = () => {
+
+        if (auth) {
+            return (
+                <>
+                    <Text style={styles.headline}>{status}</Text>
+                    <Link to='/create'>
+                        <Text style={styles.button}>New Posting</Text>
+                    </Link>
+                    <Pressable onPress={() => setAllPostings(!allPostings)}>
+                        <Text style={styles.button}>{
+                            allPostings ?
+                                'Show My Postings' :
+                                'Show All Postings'
+                        }</Text>
+                    </Pressable>
+                </>
+            )
+        } else {
+            return (
+                <>
+                    <Text style={styles.headline}>{status}</Text>
                     <Link to='/login'>
                         <Text style={styles.button}>Log In</Text>
                     </Link>
-            }
-            <Postings user={allPostings ? null : auth.username} />
+                </>
+            )
+        }
+    }
+
+    return (
+        <View style={styles.background}>
+            <Postings user={allPostings ? null : auth.username} header={header} />
         </View>
     )
 }
