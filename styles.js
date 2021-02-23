@@ -81,7 +81,6 @@ const styles = StyleSheet.create({
         width: '100 %',
         height: 'auto',
         aspectRatio: 1,
-        flex: 1,
         marginTop: 10,
         marginBottom: 10
     }

@@ -35,34 +35,17 @@ const Create = () => {
         ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
-            aspect: [4, 3],
+            aspect: [1, 1],
             quality: 1,
         }).then((result) => {
             console.log(result)
 
             if (result.cancelled === false) {
                 setNewPosting({ ...newPosting, images: newPosting.images.concat(result.uri) })
-                console.log(newPosting)
             }
         }).catch((error) => {
             console.log(error)
         })
-    }
-
-    /* https://stackoverflow.com/questions/35940290/how-to-convert-base64-string-to-javascript-file-object-like-as-from-file-input-f */
-    const dataURLtoFile = (dataurl, filename) => {
-
-        const arr = dataurl.split(',')
-        const mime = arr[0].match(/:(.*?);/)[1]
-        const bstr = atob(arr[1])
-        let n = bstr.length
-        let u8arr = new Uint8Array(n)
-
-        while (n--) {
-            u8arr[n] = bstr.charCodeAt(n)
-        }
-
-        return new File([u8arr], filename, { type: mime })
     }
 
     const upload = () => {
@@ -76,7 +59,7 @@ const Create = () => {
         formData.append('category', newPosting.category)
 
         newPosting.images.map((item, key) => {
-            formData.append('images', dataURLtoFile(item, `image${key}`))
+            formData.append('images', { uri: item, type: 'image/*', name: `image${key}` })
         })
 
         if (newPosting.shipping) {
@@ -144,7 +127,7 @@ const Create = () => {
             />
             {
                 newPosting.images.map((item, index) => {
-                    return <Image key={index} source={item} style={{ width: 100, height: 100}} />
+                    return <Image key={index} source={{ uri: item }} style={styles.image} />
                 })
             }
             <Pressable onPress={addPicture}>

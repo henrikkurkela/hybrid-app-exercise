@@ -44,7 +44,7 @@ const SignupForm = () => {
                 placeholder='password'
                 secureTextEntry={true}
                 value={password}
-                onChangeText={(event) => setPassword(text)}
+                onChangeText={(text) => setPassword(text)}
             />
             <Pressable onPress={signup}>
                 <Text style={styles.button}>
