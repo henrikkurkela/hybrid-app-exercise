@@ -78,6 +78,8 @@ const styles = StyleSheet.create({
     },
     image: {
         resizeMode: 'contain',
+        width: '100 %',
+        height: 'auto',
         aspectRatio: 1,
         flex: 1,
         marginTop: 10,

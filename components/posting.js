@@ -57,7 +57,7 @@ const Posting = () => {
                 }
                 {
                     posting.images.map((image) => {
-                        return <Image key={image.id} source={require('../assets/test.jpg')} style={styles.image} />
+                        return <Image key={image.id} source={{ uri: `https://kebappi.herokuapp.com/api${image.image}` }} style={styles.image} />
                     })
                 }
                 <Text style={styles.text}>{posting.description}</Text>

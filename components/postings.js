@@ -11,7 +11,11 @@ const Item = ({ item }) => (
     <Link to={`/posting/${item.id}`}>
         <View style={styles.listItem}>
             <View style={styles.listPictureContainer}>
-                <Image source={require('../assets/test.jpg')} style={{ width: 100, height: 100 }} />
+                {
+                    item.images[0] ?
+                        <Image source={{ uri: `https://kebappi.herokuapp.com/api${item.images[0].image}` }} style={styles.image} /> :
+                        null
+                }
             </View>
             <View style={styles.listTextContainer}>
                 <Text style={styles.headline}>{item.title + ' ' + item.price + ' €'}</Text>

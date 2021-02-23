@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { ScrollView, Text, TextInput, Pressable } from 'react-native'
+import { ScrollView, Text, TextInput, Pressable, Image } from 'react-native'
 import { useHistory } from 'react-router-native'
+import * as ImagePicker from 'expo-image-picker'
 import axios from 'axios'
 
 import styles from '../styles'
@@ -15,6 +16,7 @@ const Create = () => {
         price: 0,
         location: '',
         category: '',
+        images: [],
         shipping: false,
         pickup: false
     })
@@ -24,10 +26,44 @@ const Create = () => {
     useEffect(() => {
 
         if (history.location.state !== undefined) {
-            setNewPosting(history.location.state)
+            setNewPosting({ ...history.location.state, images: [] })
             setEditMode(true)
         }
     }, [history])
+
+    const addPicture = () => {
+        ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        }).then((result) => {
+            console.log(result)
+
+            if (result.cancelled === false) {
+                setNewPosting({ ...newPosting, images: newPosting.images.concat(result.uri) })
+                console.log(newPosting)
+            }
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
+
+    /* https://stackoverflow.com/questions/35940290/how-to-convert-base64-string-to-javascript-file-object-like-as-from-file-input-f */
+    const dataURLtoFile = (dataurl, filename) => {
+
+        const arr = dataurl.split(',')
+        const mime = arr[0].match(/:(.*?);/)[1]
+        const bstr = atob(arr[1])
+        let n = bstr.length
+        let u8arr = new Uint8Array(n)
+
+        while (n--) {
+            u8arr[n] = bstr.charCodeAt(n)
+        }
+
+        return new File([u8arr], filename, { type: mime })
+    }
 
     const upload = () => {
 
@@ -38,6 +74,11 @@ const Create = () => {
         formData.append('price', newPosting.price)
         formData.append('location', newPosting.location)
         formData.append('category', newPosting.category)
+
+        newPosting.images.map((item, key) => {
+            formData.append('images', dataURLtoFile(item, `image${key}`))
+        })
+
         if (newPosting.shipping) {
             formData.append('shipping', 'true')
         } else {
@@ -101,6 +142,16 @@ const Create = () => {
                 value={String(newPosting.price)}
                 onChangeText={(text) => setNewPosting({ ...newPosting, price: Number(text) })}
             />
+            {
+                newPosting.images.map((item, index) => {
+                    return <Image key={index} source={item} style={{ width: 100, height: 100}} />
+                })
+            }
+            <Pressable onPress={addPicture}>
+                <Text style={styles.button}>
+                    Add Picture
+                </Text>
+            </Pressable>
             <TextInput
                 style={styles.field}
                 placeholder='location'
