@@ -6,23 +6,24 @@ import Postings from './postings'
 
 import styles from '../styles'
 
-const Search = () => {
+const Header = ({ filter, setFilter }) => {
 
     const fields = ['title', 'description', 'category', 'location']
 
     const [index, setIndex] = useState(0)
-    const [filter, setFilter] = useState({ field: fields[index], value: '' })
 
     const changeField = () => {
+
         if (index < fields.length - 1) {
             setIndex(index + 1)
-            setFilter({ ...filter, field: fields[index] })
         } else {
             setIndex(0)
         }
+
+        setFilter({ ...filter, field: fields[index] })
     }
 
-    const header =
+    return (
         <>
             <Text style={styles.headline}>Search</Text>
             <Link to='/'>
@@ -35,13 +36,19 @@ const Search = () => {
                 onChangeText={(text) => setFilter({ ...filter, value: text })}
             />
             <Pressable onPress={changeField}>
-                <Text style={styles.buttonGreen}>{fields[index]}</Text>
+                <Text style={styles.buttonGreen}>{filter.field}</Text>
             </Pressable>
         </>
+    )
+}
+
+const Search = () => {
+
+    const [filter, setFilter] = useState({ field: 'title', value: '' })
 
     return (
         <View style={styles.background}>
-            <Postings filter={filter} header={header} />
+            <Postings filter={filter} header={<Header filter={filter} setFilter={setFilter} />} />
         </View>
     )
 }
