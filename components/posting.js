@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { View, ScrollView, Text, Image, Pressable, BackHandler } from 'react-native'
 import { useParams, Link, useHistory } from 'react-router-native'
 import { useSelector } from 'react-redux'
+import { FontAwesome } from '@expo/vector-icons'
 import axios from 'axios'
 
 import styles from '../styles'
@@ -71,14 +72,22 @@ const Posting = () => {
                         </> :
                         null
                 }
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <View style={{ flex: 1 }}>
+                        <FontAwesome style={styles.iconContainer} name='truck' size={100} color={posting.shipping ? 'green' : 'red'} />
+                        <Text style={styles.text}>Shipping: {posting.shipping ? 'Yes' : 'No'}</Text>
+                    </View>
+                    <View style={{ flex: 1 }}>
+                        <FontAwesome style={styles.iconContainer} name='handshake-o' size={100} color={posting.pickup ? 'green' : 'red'} />
+                        <Text style={styles.text}>Pickup: {posting.pickup ? 'Yes' : 'No'}</Text>
+                    </View>
+                </View>
                 {
                     posting.images.map((image) => {
                         return <Image key={image.id} source={{ uri: `${BACKEND_URL}${image.image}` }} style={styles.image} />
                     })
                 }
                 <Text style={styles.text}>{posting.description}</Text>
-                <Text style={styles.text}>Shipping: {posting.shipping ? 'Yes' : 'No'}</Text>
-                <Text style={styles.text}>Pickup: {posting.pickup ? 'Yes' : 'No'}</Text>
                 <Text style={{ ...styles.text, paddingBottom: 100 }}>{`Contact: ${posting.user.email}`}</Text>
             </ScrollView>
         )

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { ScrollView, Text, TextInput, Pressable, Image, BackHandler } from 'react-native'
+import { ScrollView, Text, TextInput, Pressable, Image, BackHandler, Alert } from 'react-native'
 import { useHistory } from 'react-router-native'
 import * as ImagePicker from 'expo-image-picker'
 import axios from 'axios'
@@ -54,14 +54,16 @@ const Create = () => {
             aspect: [1, 1],
             quality: 1,
         }).then((result) => {
-            console.log(result)
-
             if (result.cancelled === false) {
                 setNewPosting({ ...newPosting, images: newPosting.images.concat(result.uri) })
             }
         }).catch((error) => {
             console.log(error)
         })
+    }
+
+    const removePicture = (picture) => {
+        setNewPosting({ ...newPosting, images: newPosting.images.filter((item) => item !== picture) })
     }
 
     const upload = () => {
@@ -101,6 +103,11 @@ const Create = () => {
                     history.push('/')
                 })
                 .catch((error) => {
+                    Alert.alert(
+                        'Error',
+                        error.message,
+                        [{ text: "OK" }]
+                    )
                     console.log(error)
                 })
         } else {
@@ -114,6 +121,11 @@ const Create = () => {
                     history.push('/')
                 })
                 .catch((error) => {
+                    Alert.alert(
+                        'Error',
+                        error.response?.data || 'Network error.',
+                        [{ text: "OK" }]
+                    )
                     console.log(error)
                 })
         }
@@ -143,7 +155,11 @@ const Create = () => {
             />
             {
                 newPosting.images.map((item, index) => {
-                    return <Image key={index} source={{ uri: item }} style={styles.image} />
+                    return (
+                        <Pressable key={index} onPress={() => removePicture(item)}>
+                            <Image source={{ uri: item }} style={styles.image} />
+                        </Pressable>
+                    )
                 })
             }
             <Pressable onPress={addPicture}>

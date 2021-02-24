@@ -76,6 +76,10 @@ const styles = StyleSheet.create({
         flexGrow: 2,
         flexShrink: 1
     },
+    iconContainer: {
+        flex: 1,
+        textAlign: 'center'
+    },
     image: {
         resizeMode: 'contain',
         width: '100 %',
