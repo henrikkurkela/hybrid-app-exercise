@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { View, ScrollView, Text, Image, Pressable } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { View, ScrollView, Text, Image, Pressable, BackHandler } from 'react-native'
 import { useParams, Link, useHistory } from 'react-router-native'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
@@ -24,6 +24,21 @@ const Posting = () => {
             return false
         }
     })
+
+    useEffect(() => {
+
+        const backAction = () => {
+            history.goBack()
+            return true
+        }
+
+        const backHandler = BackHandler.addEventListener(
+            'hardwareBackPress',
+            backAction
+        )
+
+        return () => backHandler.remove()
+    }, [])
 
     const deletePosting = (item) => {
 
@@ -63,10 +78,7 @@ const Posting = () => {
                 <Text style={styles.text}>{posting.description}</Text>
                 <Text style={styles.text}>Shipping: {posting.shipping ? 'Yes' : 'No'}</Text>
                 <Text style={styles.text}>Pickup: {posting.pickup ? 'Yes' : 'No'}</Text>
-                <Text style={styles.text}>{`Contact: ${posting.user.email}`}</Text>
-                <Link to='/'>
-                    <Text style={{ ...styles.link, paddingBottom: 20 }}>Go Back</Text>
-                </Link>
+                <Text style={{ ...styles.text, paddingBottom: 100 }}>{`Contact: ${posting.user.email}`}</Text>
             </ScrollView>
         )
     } else {

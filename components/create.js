@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { ScrollView, Text, TextInput, Pressable, Image } from 'react-native'
+import { ScrollView, Text, TextInput, Pressable, Image, BackHandler } from 'react-native'
 import { useHistory } from 'react-router-native'
 import * as ImagePicker from 'expo-image-picker'
 import axios from 'axios'
@@ -22,6 +22,21 @@ const Create = () => {
     })
 
     const history = useHistory()
+
+    useEffect(() => {
+
+        const backAction = () => {
+            history.goBack()
+            return true
+        }
+
+        const backHandler = BackHandler.addEventListener(
+            'hardwareBackPress',
+            backAction
+        )
+
+        return () => backHandler.remove()
+    }, [])
 
     useEffect(() => {
 
@@ -160,11 +175,6 @@ const Create = () => {
             <Pressable onPress={upload}>
                 <Text style={styles.button}>
                     Post
-                </Text>
-            </Pressable>
-            <Pressable onPress={() => history.push('/')}>
-                <Text style={styles.button}>
-                    Go Back
                 </Text>
             </Pressable>
         </ScrollView>

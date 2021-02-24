@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import { View, Text, Pressable, TextInput } from 'react-native'
-import { Link } from 'react-router-native'
+import React, { useState, useEffect } from 'react'
+import { View, Text, Pressable, TextInput, BackHandler } from 'react-native'
+import { useHistory } from 'react-router-native'
 
 import Postings from './postings'
 
@@ -26,9 +26,6 @@ const Header = ({ filter, setFilter }) => {
     return (
         <>
             <Text style={styles.headline}>Search</Text>
-            <Link to='/'>
-                <Text style={styles.button}>Go Back</Text>
-            </Link>
             <TextInput
                 style={styles.field}
                 placeholder='value'
@@ -45,6 +42,23 @@ const Header = ({ filter, setFilter }) => {
 const Search = () => {
 
     const [filter, setFilter] = useState({ field: 'title', value: '' })
+
+    const history = useHistory()
+
+    useEffect(() => {
+
+        const backAction = () => {
+            history.goBack()
+            return true
+        }
+
+        const backHandler = BackHandler.addEventListener(
+            'hardwareBackPress',
+            backAction
+        )
+
+        return () => backHandler.remove()
+    }, [])
 
     return (
         <View style={styles.background}>

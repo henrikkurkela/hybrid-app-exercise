@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Text, View, TextInput, Pressable } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { Text, View, TextInput, Pressable, BackHandler } from 'react-native'
 import { useHistory, Link } from 'react-router-native'
 import axios from 'axios'
 
@@ -13,6 +13,21 @@ const SignupForm = () => {
     const [text, setText] = useState('Sign Up')
 
     const history = useHistory()
+
+    useEffect(() => {
+
+        const backAction = () => {
+            history.goBack()
+            return true
+        }
+
+        const backHandler = BackHandler.addEventListener(
+            'hardwareBackPress',
+            backAction
+        )
+
+        return () => backHandler.remove()
+    }, [])
 
     const signup = () => {
 
@@ -49,11 +64,6 @@ const SignupForm = () => {
             <Pressable onPress={signup}>
                 <Text style={styles.button}>
                     Sign Up
-                </Text>
-            </Pressable>
-            <Pressable onPress={() => history.push('/')}>
-                <Text style={styles.button}>
-                    Go Back
                 </Text>
             </Pressable>
             <Text style={styles.text}>
