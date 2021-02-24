@@ -5,6 +5,7 @@ import axios from 'axios'
 
 import styles from '../styles'
 import { authenticate } from '../actions'
+import { BACKEND_URL } from '../constants'
 
 const LoginForm = () => {
 
@@ -31,7 +32,7 @@ const LoginForm = () => {
 
     const login = () => {
 
-        axios.post('https://kebappi.herokuapp.com/api/login', { username, password })
+        axios.post(`${BACKEND_URL}/login`, { username, password })
             .then((response) => {
                 authenticate({ auth: response.data.auth, username: username })
                 history.push('/')

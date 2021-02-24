@@ -6,6 +6,7 @@ import axios from 'axios'
 
 import styles from '../styles'
 import { removePosting } from '../actions'
+import { BACKEND_URL } from '../constants'
 
 const Posting = () => {
 
@@ -42,7 +43,7 @@ const Posting = () => {
 
     const deletePosting = (item) => {
 
-        axios.delete(`https://kebappi.herokuapp.com/api/postings/${item.id}`)
+        axios.delete(`${BACKEND_URL}/postings/${item.id}`)
             .then(() => {
                 removePosting(item)
                 history.push('/')
@@ -72,7 +73,7 @@ const Posting = () => {
                 }
                 {
                     posting.images.map((image) => {
-                        return <Image key={image.id} source={{ uri: `https://kebappi.herokuapp.com/api${image.image}` }} style={styles.image} />
+                        return <Image key={image.id} source={{ uri: `${BACKEND_URL}${image.image}` }} style={styles.image} />
                     })
                 }
                 <Text style={styles.text}>{posting.description}</Text>

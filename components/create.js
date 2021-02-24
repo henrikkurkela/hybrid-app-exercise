@@ -6,6 +6,7 @@ import axios from 'axios'
 
 import styles from '../styles'
 import { updatePosting } from '../actions'
+import { BACKEND_URL } from '../constants'
 
 const Create = () => {
 
@@ -91,7 +92,7 @@ const Create = () => {
         if (editMode) {
             axios({
                 method: 'patch',
-                url: `https://kebappi.herokuapp.com/api/postings/${newPosting.id}`,
+                url: `${BACKEND_URL}/postings/${newPosting.id}`,
                 data: formData,
                 headers: { 'Content-Type': 'multipart/form-data' }
             })
@@ -105,7 +106,7 @@ const Create = () => {
         } else {
             axios({
                 method: 'post',
-                url: 'https://kebappi.herokuapp.com/api/postings',
+                url: `${BACKEND_URL}/postings`,
                 data: formData,
                 headers: { 'Content-Type': 'multipart/form-data' }
             })

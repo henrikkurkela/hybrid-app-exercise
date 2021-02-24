@@ -6,6 +6,7 @@ import axios from 'axios'
 
 import styles from '../styles'
 import { addPosting } from '../actions'
+import { BACKEND_URL } from '../constants'
 
 const Item = ({ item }) => (
     <Link to={`/posting/${item.id}`}>
@@ -13,7 +14,7 @@ const Item = ({ item }) => (
             <View style={styles.listPictureContainer}>
                 {
                     item.images[0] ?
-                        <Image source={{ uri: `https://kebappi.herokuapp.com/api${item.images[0].image}` }} style={styles.image} /> :
+                        <Image source={{ uri: `${BACKEND_URL}${item.images[0].image}` }} style={styles.image} /> :
                         null
                 }
             </View>
@@ -35,7 +36,7 @@ const Postings = ({ user = null, filter = { field: null, value: null }, header =
 
         const source = axios.CancelToken.source()
 
-        axios.get('https://kebappi.herokuapp.com/api/postings', {
+        axios.get(`${BACKEND_URL}/postings`, {
             cancelToken: source.token
         })
             .then((response) => {

@@ -4,6 +4,7 @@ import { useHistory, Link } from 'react-router-native'
 import axios from 'axios'
 
 import styles from '../styles'
+import { BACKEND_URL } from '../constants'
 
 const SignupForm = () => {
 
@@ -31,7 +32,7 @@ const SignupForm = () => {
 
     const signup = () => {
 
-        axios.post('https://kebappi.herokuapp.com/api/signup', { email, username, password })
+        axios.post(`${BACKEND_URL}/signup`, { email, username, password })
             .then(() => {
                 history.push('/', [`Account ${username} created.`])
             }).catch((error) => {
