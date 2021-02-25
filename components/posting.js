@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, ScrollView, Text, Image, Pressable, BackHandler } from 'react-native'
+import { View, ScrollView, Text, Image, Pressable, BackHandler, Linking } from 'react-native'
 import { useParams, Link, useHistory } from 'react-router-native'
 import { useSelector } from 'react-redux'
 import { FontAwesome } from '@expo/vector-icons'
@@ -57,7 +57,7 @@ const Posting = () => {
 
     if (posting) {
         return (
-            <ScrollView style={styles.background}>
+            <ScrollView style={styles.background} contentContainerStyle={{ paddingBottom: 60 }}>
                 <Text style={styles.headline}>{posting.title}</Text>
                 <Text style={styles.text}>{`${posting.price} €`}</Text>
                 {
@@ -70,7 +70,11 @@ const Posting = () => {
                                 <Text style={styles.button}>Delete Posting</Text>
                             </Pressable>
                         </> :
-                        null
+                        <>
+                            <Pressable onPress={() => Linking.openURL(`mailto:${posting.user.email}?subject=${posting.title}`)}>
+                                <Text style={styles.button}>Contact Seller</Text>
+                            </Pressable>
+                        </>
                 }
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <View style={{ flex: 1 }}>
@@ -88,7 +92,6 @@ const Posting = () => {
                     })
                 }
                 <Text style={styles.text}>{posting.description}</Text>
-                <Text style={{ ...styles.text, paddingBottom: 100 }}>{`Contact: ${posting.user.email}`}</Text>
             </ScrollView>
         )
     } else {

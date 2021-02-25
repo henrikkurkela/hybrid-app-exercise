@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { ScrollView, Text, TextInput, Pressable, Image, BackHandler, Alert } from 'react-native'
+import { ScrollView, View, Text, TextInput, Pressable, Image, BackHandler, Alert } from 'react-native'
 import { useHistory } from 'react-router-native'
 import * as ImagePicker from 'expo-image-picker'
+import { FontAwesome } from '@expo/vector-icons'
 import axios from 'axios'
 
 import styles from '../styles'
@@ -80,12 +81,13 @@ const Create = () => {
             formData.append('images', { uri: item, type: 'image/*', name: `image${key}` })
         })
 
-        if (newPosting.shipping) {
+        if (newPosting.shipping === true) {
             formData.append('shipping', 'true')
         } else {
             formData.append('shipping', 'false')
         }
-        if (newPosting.pickup) {
+
+        if (newPosting.pickup === true) {
             formData.append('pickup', 'true')
         } else {
             formData.append('pickup', 'false')
@@ -153,6 +155,16 @@ const Create = () => {
                 value={String(newPosting.price)}
                 onChangeText={(text) => setNewPosting({ ...newPosting, price: Number(text) })}
             />
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Pressable style={{ flex: 1 }} onPress={() => setNewPosting({ ...newPosting, shipping: !newPosting.shipping })}>
+                    <FontAwesome style={styles.iconContainer} name='truck' size={100} color={newPosting.shipping ? 'green' : 'red'} />
+                    <Text style={styles.text}>Shipping: {newPosting.shipping ? 'Yes' : 'No'}</Text>
+                </Pressable>
+                <Pressable style={{ flex: 1 }} onPress={() => setNewPosting({ ...newPosting, pickup: !newPosting.pickup })}>
+                    <FontAwesome style={styles.iconContainer} name='handshake-o' size={100} color={newPosting.pickup ? 'green' : 'red'} />
+                    <Text style={styles.text}>Pickup: {newPosting.pickup ? 'Yes' : 'No'}</Text>
+                </Pressable>
+            </View>
             {
                 newPosting.images.map((item, index) => {
                     return (
@@ -179,16 +191,6 @@ const Create = () => {
                 value={newPosting.category}
                 onChangeText={(text) => setNewPosting({ ...newPosting, category: text })}
             />
-            <Pressable onPress={() => setNewPosting({ ...newPosting, shipping: !newPosting.shipping })}>
-                <Text style={newPosting.shipping ? styles.buttonGreen : styles.buttonRed}>
-                    {newPosting.shipping ? 'I can ship' : 'No shipping'}
-                </Text>
-            </Pressable>
-            <Pressable onPress={() => setNewPosting({ ...newPosting, pickup: !newPosting.pickup })}>
-                <Text style={newPosting.pickup ? styles.buttonGreen : styles.buttonRed}>
-                    {newPosting.pickup ? 'Buyer can pickup' : 'No pickups'}
-                </Text>
-            </Pressable>
             <Pressable onPress={upload}>
                 <Text style={styles.button}>
                     Post
