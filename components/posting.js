@@ -60,6 +60,7 @@ const Posting = () => {
             <ScrollView style={styles.background} contentContainerStyle={{ paddingBottom: 60 }}>
                 <Text style={styles.headline}>{posting.title}</Text>
                 <Text style={styles.text}>{`${posting.price} €`}</Text>
+                <Text style={styles.text}>{posting.location}</Text>
                 {
                     ownPosting ?
                         <>

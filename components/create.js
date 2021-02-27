@@ -135,7 +135,7 @@ const Create = () => {
 
     return (
         <ScrollView style={styles.background}>
-            <Text style={styles.headline}>New Posting</Text>
+            <Text style={styles.headline}>{editMode ? 'Edit Posting' : 'New Posting'}</Text>
             <TextInput
                 style={styles.field}
                 placeholder='title'
